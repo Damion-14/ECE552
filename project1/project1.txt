@@ -1,0 +1,57 @@
+# 1
+
+## Q0
+**Reflect: Is the result in a0 always the correct and complete product of the two 32-bit input numbers? Why or why not?**
+
+No this will not multiply negative numbers, the algorithm doesn't handle two's complement representation properly. There will also errors when the two numbers multiplied result in overflow.
+
+## Q1
+**Think: Can you think of any other arithmetic operations not listed on the reference sheet that could be implemented using RISC-V assembly code? Multiplication and division are not allowed as answers.**
+
+absolute value, square root, exponents, logs
+
+## Q2
+**Think: Multiplication can also be implemented in hardware by creating a mul instruction. What might be the benefits and costs of introducing a hardware multiplication instruction? Describe at least one benefit and one cost/downside**
+
+One cost is the size and complexity added by the hardware multiplier. One benefit is multiplication can be done faster.
+
+## Q3
+**Research: Recall the IA-32 (32-bit x86) assembly language you learned in ECE 354 (Wikipedia). Describe 3 differences between RV32I and IA-32. Do not simply list terminology (like CISC or RISC) without describing what it means or providing an example.**
+
+The instructions in IA-32 take two args while RV32I take three (add is an example)
+IA-32 has more complex addressing modes
+IA-32 can do operations on memory while RV32I can only do operations on CPU registers
+
+# 2
+
+## Q4
+**Think: Provide a brief description of the differences between a high-level language such as C and a low-level language such as RISC-V. In what situations would you use one or the other?**
+
+RISC-V can be very closely translated into machine code where one line is one instruction/operation. C is a high-level language because it abstracts a lot of the complexities in assembly like addressing and machine specific instructions. You would use assembly in cases where you are doing specific optimizations, embedded programming, system-level programming, or real-time systems. You would use C when you still want to write software that has control over physical hardware and is highly portable.
+
+## Q5
+**Research: What software components allow the C code you write to be realized as machine instructions that can be executed by a processor? How might their design impact overall performance?**
+
+To get from C code into machince instructions we need the Compiler, Assembler, Linker and Loader. if the C code is translated into inefficient instructions there could be wasted cpu cycles.
+
+## Q6
+**Research: Adding a hardware multiplication instruction would improve performance for certain programs that utilize this heavily, such as dot product. What would be the effects, if any, of adding this optimization to a CPU on other programs that do not require multiplication as extensively?**
+
+From the softwares perspective, there would not be a huge effect on the programs that do not multiply as much.
+
+# 3
+
+## Q7
+**Reflect: What is this program doing (be specific as to the equation this implements)?**
+
+This program counts the time 9 can be subtracted from 5*(input - 32) until 5*(input - 32) is less than 9. AKA $\lfloor \frac{5 \cdot (\text{input} - 32)}{9} \rfloor$. This is the temperature conversion from F to C.
+
+## Q8
+**Think: Explain how you would modify this assembly code to produce the opposite effect.**
+
+Instead of 5/9(F - 32) the program needs to compute (C * 9/5) + 32. We would change the multiplication in the beginning to be a0*9 (shift left 3 then add a0) and then loop to divide by 5 by subtracting until (a0 * 9) < 5 then after the loop terminates add 32 and return that value.
+
+## Q9
+**Research: A simple arithmetic program such as this can still run faster by means of hardware improvement. Name one hardware improvement you could make that would make this particular program run faster.**
+
+Hardware division would speed up this program.

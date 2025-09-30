@@ -1,0 +1,19 @@
+# 1
+
+## Q1
+**Following the same encoding of 0, + and -, provide the Booth’s encodingfor this 32-bit number: −8**
+
+11111111111111111111111111111000 -> 0000000000000000000000000000-000
+
+## Q2
+**Following the same encoding of 0, + and -, provide the Booth’s encoding for this 32-bit number: 5**
+
+000000000000000000000000000001010 -> 0000000000000000000000000000+-+-
+
+# 2
+
+## Q3
+**Fix the bug in booth_compute so these tests produce correct results. Do not modify the trace generation logic for submission. Hint: focus on the booth encoding/opcode generation logic.**
+
+I initialized right to 0.
+
