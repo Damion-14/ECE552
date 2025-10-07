@@ -57,15 +57,16 @@ module alu (
     
     assign sll_result = i_op1 << i_op2[4:0];
     
-    wire signed_lt = $signed(i_op1) < $signed(i_op2);
+    wire signed_lt = (i_op1[31] != i_op2[31]) ?  i_op1[31] : (i_op1 < i_op2);
+
     wire unsigned_lt = i_op1 < i_op2;
     wire slt_bit = i_unsigned ? unsigned_lt : signed_lt;
     assign slt_result = {31'b0, slt_bit};
     
     assign xor_result = i_op1 ^ i_op2;
     
-    assign srl_sra_result = i_arith ? ($signed(i_op1) >>> i_op2[4:0]) : (i_op1 >> i_op2[4:0]);
-    
+    assign srl_sra_result = (i_op1 >> i_op2[4:0]) | ({32{i_arith & i_op1[31]}} << (32 - i_op2[4:0]));
+
     assign or_result = i_op1 | i_op2;
     
     assign and_result = i_op1 & i_op2;
