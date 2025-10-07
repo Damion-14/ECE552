@@ -1,0 +1,21 @@
+Author: Damion Huppert
+
+[Q0]: When we try to write to register x0 we should ignore the write
+
+[Q1]: It need has different requirements and purpose where it is needed every clock cycle and have more predicatbale changes
+
+[Q2]: We would have to change the instructions and add more bits to the register values. the change in this verilog file would be trivial by changing line 52 `reg [31:0] registers [31:0];`
+
+[Q3]: The wrong value will be used in the next instruction. type R instructions dont use an immediate value.
+
+[Q4]: Those instructions must not need to use the lowest bit, like you cant jump to a odd address. The downside would be these instructions couldnt do percise math and waste a bit of encoding.
+
+[Q5]: The immediate encodings for J and U type instructions are highly optimized. They fill the unused register bits and have the sign bit at the same spot as all other instructions
+
+[Q6]: We can use these to execute instructions as all instructions will need to either use the registers or immediate values. We still need to make the main memory and program counter and then connect everythong together.
+
+[Q7]: We could use the unsed instruction 3'b010 to implement it
+
+[Q8]: We could modify all of the implementations with a flag to either use the upper or lower half of a word.
+
+I certify that I have not used LLMs to complete this assignment in any shape or form.

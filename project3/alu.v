@@ -45,6 +45,42 @@ module alu (
     output wire        o_slt
 );
     // Fill in your implementation here.
+    wire [31:0] add_sub_result;
+    wire [31:0] sll_result;
+    wire [31:0] slt_result;
+    wire [31:0] xor_result;
+    wire [31:0] srl_sra_result;
+    wire [31:0] or_result;
+    wire [31:0] and_result;
+
+    assign add_sub_result = i_op1 + (i_sub ? ~i_op2 + 32'd1 : i_op2);
+    
+    assign sll_result = i_op1 << i_op2[4:0];
+    
+    wire signed_lt = $signed(i_op1) < $signed(i_op2);
+    wire unsigned_lt = i_op1 < i_op2;
+    wire slt_bit = i_unsigned ? unsigned_lt : signed_lt;
+    assign slt_result = {31'b0, slt_bit};
+    
+    assign xor_result = i_op1 ^ i_op2;
+    
+    assign srl_sra_result = i_arith ? ($signed(i_op1) >>> i_op2[4:0]) : (i_op1 >> i_op2[4:0]);
+    
+    assign or_result = i_op1 | i_op2;
+    
+    assign and_result = i_op1 & i_op2;
+    
+    assign o_result = (i_opsel == 3'b000) ? add_sub_result :
+                      (i_opsel == 3'b001) ? sll_result :
+                      (i_opsel == 3'b010) ? slt_result :
+                      (i_opsel == 3'b011) ? slt_result :
+                      (i_opsel == 3'b100) ? xor_result :
+                      (i_opsel == 3'b101) ? srl_sra_result :
+                      (i_opsel == 3'b110) ? or_result :
+                                            and_result;
+    assign o_eq = (i_op1 == i_op2);
+    assign o_slt = slt_bit;
+
 endmodule
 
 `default_nettype wire
